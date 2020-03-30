@@ -126,7 +126,9 @@ func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 				return nil, err
 			}
 		case MEPGProgramEndCode:
-			return dec.rawData[:dec.rawLen], nil
+			raw := dec.rawData[:dec.rawLen]
+			dec.rawLen = 0
+			return raw, nil
 		}
 	}
 }
