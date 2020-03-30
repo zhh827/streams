@@ -141,7 +141,7 @@ func (dec *DecPSPackage) decSystemHeader(br bitreader.BitReader) error {
 	//br.Skip(6 * 8)
 
 	// ONE WAY: do not to parse the stream  and skip the buffer
-	br.Skip(syslens * 8)
+	br.Skip(uint(syslens) * 8)
 
 	// TWO WAY: parse every stream info
 	//for syslens > 0 {
