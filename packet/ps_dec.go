@@ -30,69 +30,69 @@ func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 		return nil, ErrNotFoundStartCode
 	}
 
-	if marker, err := br.Read32(2); err != nil {
+	if _, err := br.Read32(2); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 
 	if s, err := br.Read32(3); err != nil {
 		return nil, err
 	} else {
 		dec.systemClockReferenceBase |= uint64(s << 30)
 	}
-	if marker, err := br.Read32(1); err != nil {
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 
 	if s, err := br.Read32(15); err != nil {
 		return nil, err
 	} else {
 		dec.systemClockReferenceBase |= uint64(s << 15)
 	}
-	if marker, err := br.Read32(1); err != nil {
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 	if s, err := br.Read32(15); err != nil {
 		return nil, err
 	} else {
 		dec.systemClockReferenceBase |= uint64(s)
 	}
-	if marker, err := br.Read32(1); err != nil {
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 	if s, err := br.Read32(9); err != nil {
 		return nil, err
 	} else {
 		dec.systemClockReferenceExtension |= uint64(s)
 	}
-	if marker, err := br.Read32(1); err != nil {
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 
 	if pmr, err := br.Read32(22); err != nil {
 		return nil, err
 	} else {
 		dec.programMuxRate |= pmr
 	}
-	if marker, err := br.Read32(1); err != nil {
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
-	if marker, err := br.Read32(1); err != nil {
+	}*/
+	if _, err := br.Read32(1); err != nil {
 		return nil, err
-	} else if marker != 0x01 {
+	} /*else if marker != 0x01 {
 		return nil, ErrMarkerBit
-	}
+	}*/
 
 	if err := br.Skip(5); err != nil {
 		return nil, err
