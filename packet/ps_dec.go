@@ -137,33 +137,33 @@ func (dec *DecPSPackage) decSystemHeader(br bitreader.BitReader) error {
 		return err
 	}
 	// drop rate video audio bound and lock flag
-	syslens -= 6
-	br.Skip(6 * 8)
+	//syslens -= 6
+	//br.Skip(6 * 8)
 
 	// ONE WAY: do not to parse the stream  and skip the buffer
-	//br.Skip(syslen * 8)
+	br.Skip(syslens * 8)
 
 	// TWO WAY: parse every stream info
-	for syslens > 0 {
-		if nextbits, err := br.Peek32(1); err != nil {
-			return err
-		} else if nextbits == 1 {
-			break
-		}
-
-		if _, err := br.Read32(8); err != nil {
-			return err
-		}
-		if _, err := br.Read32(2); err != nil {
-			return err
-		}
-		if _, err := br.Read1(); err != nil {
-			return err
-		}
-		if _, err := br.Read32(13); err != nil {
-			return err
-		}
-	}
+	//for syslens > 0 {
+	//	if nextbits, err := br.Peek32(1); err != nil {
+	//		return err
+	//	} else if nextbits == 1 {
+	//		break
+	//	}
+	//
+	//	if _, err := br.Read32(8); err != nil {
+	//		return err
+	//	}
+	//	if _, err := br.Read32(2); err != nil {
+	//		return err
+	//	}
+	//	if _, err := br.Read1(); err != nil {
+	//		return err
+	//	}
+	//	if _, err := br.Read32(13); err != nil {
+	//		return err
+	//	}
+	//}
 	return nil
 }
 
