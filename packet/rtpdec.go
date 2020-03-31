@@ -9,10 +9,11 @@ import (
 )
 
 type RtpParsePacket struct {
-	psDenc   *DecPSPackage
-	psFrames map[uint32]*priority_queue.PriorityQueue //一个时间戳一个队列
-	psPkg    []byte
-	psPkgLen int
+	psDenc          *DecPSPackage
+	psFrames        map[uint32]*priority_queue.PriorityQueue //一个时间戳一个队列
+	psPkg           []byte
+	psPkgLen        int
+	TimestampRTPCur uint32
 }
 
 func NewRtpParsePacket() *RtpParsePacket {
@@ -83,9 +84,9 @@ func (r *RtpParsePacket) ReadRtp(data []byte) ([]byte, error) {
 
 		//不要音频，过滤掉只有pes没有psh的音频包
 		if len(rtpPkg.Payload) > 4 && rtpPkg.Payload[0] == 0 && rtpPkg.Payload[1] == 0 && rtpPkg.Payload[2] == 1 && rtpPkg.Payload[3] == 0xe0 { //视频
-			if rtpPkg.Payload[3] == 0xe0 || rtpPkg.Payload[3] == 0xba{
+			if rtpPkg.Payload[3] == 0xe0 || rtpPkg.Payload[3] == 0xba {
 				isVideo = true
-			}else if rtpPkg.Payload[3] == 0xc0{
+			} else if rtpPkg.Payload[3] == 0xc0 {
 				isVideo = false
 			}
 
@@ -123,5 +124,6 @@ func (r *RtpParsePacket) ReadRtp(data []byte) ([]byte, error) {
 	//从ps解析出原始帧
 	frame := r.psPkg[:r.psPkgLen]
 	r.psPkgLen = 0
+	r.TimestampRTPCur = rtpPkg.Timestamp
 	return r.ReadPsFrame(frame)
 }
