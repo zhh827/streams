@@ -20,6 +20,10 @@ type DecPSPackage struct {
 	audioStreamType uint32
 }
 
+func (dec *DecPSPackage) reSet() {
+	dec.rawLen = 0
+}
+
 func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 
 	startcode, err := br.Read32(32)
@@ -120,8 +124,8 @@ func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 				return nil, err
 			}
 		case StartCodeVideo:
-			fallthrough
-		case StartCodeAudio:
+			//	fallthrough
+			//case StartCodeAudio: //不要音频
 			if err := dec.decPESPacket(br); err != nil {
 				return nil, err
 			}
@@ -129,6 +133,9 @@ func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 			raw := dec.rawData[:dec.rawLen]
 			dec.rawLen = 0
 			return raw, nil
+		default:
+			dec.rawLen = 0
+			return nil, ErrParsePakcet
 		}
 	}
 }
