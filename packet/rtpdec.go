@@ -99,6 +99,7 @@ func (r *RtpParsePacket) ReadRtp(data []byte) ([]byte, error) {
 		//帧开头和结尾
 		if r.psPkgLen == 0 && len(rtpPkg.Payload) > 4 { //起始非ps header，跳过
 			if !(rtpPkg.Payload[0] == 0 && rtpPkg.Payload[1] == 0 && rtpPkg.Payload[2] == 1 && rtpPkg.Payload[3] == 0xba) {
+				q.Pop()
 				continue
 			}
 		}
