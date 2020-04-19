@@ -42,7 +42,7 @@ const (
 	PESHeaderLength    int = 19
 	RtpLoadLength      int = 1460
 	PESLoadLength      int = 0xFFFF
-	MAXFrameLen        int = 1024 * 1024 * 2
+	MAXFrameLen        int = 1024 * 1024 * 10
 )
 
 var (
