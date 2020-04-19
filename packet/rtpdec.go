@@ -4,16 +4,19 @@ import (
 	"bytes"
 	"github.com/MeloQi/rtp"
 	"github.com/gansidui/priority_queue"
+	"os"
 
 	"github.com/32bitkid/bitreader"
 )
 
 type RtpParsePacket struct {
-	psDenc          *DecPSPackage
-	psFrames        map[uint32]*priority_queue.PriorityQueue //一个时间戳一个队列
-	psPkg           []byte
-	psPkgLen        int
-	TimestampRTPCur uint32
+	psDenc            *DecPSPackage
+	psFrames          map[uint32]*priority_queue.PriorityQueue //一个时间戳一个队列
+	psPkg             []byte
+	psPkgLen          int
+	TimestampRTPCur   uint32
+	DebugSavePsFile   *os.File
+	DebugSaveH264File *os.File
 }
 
 func NewRtpParsePacket() *RtpParsePacket {
@@ -25,6 +28,15 @@ func NewRtpParsePacket() *RtpParsePacket {
 		psFrames: make(map[uint32]*priority_queue.PriorityQueue),
 		psPkg:    make([]byte, MAXFrameLen),
 		psPkgLen: 0,
+	}
+}
+
+func (r *RtpParsePacket) Close() {
+	if r.DebugSavePsFile != nil {
+		r.DebugSavePsFile.Close()
+	}
+	if r.DebugSaveH264File != nil {
+		r.DebugSaveH264File.Close()
 	}
 }
 
@@ -124,7 +136,17 @@ func (r *RtpParsePacket) ReadRtp(data []byte) ([]byte, error) {
 
 	//从ps解析出原始帧
 	frame := r.psPkg[:r.psPkgLen]
+	if r.DebugSavePsFile != nil {
+		r.DebugSavePsFile.Write(frame)
+	}
+
 	r.psPkgLen = 0
 	r.TimestampRTPCur = rtpPkg.Timestamp
-	return r.ReadPsFrame(frame)
+
+	raw, err := r.ReadPsFrame(frame)
+	if r.DebugSaveH264File != nil && err == nil && raw != nil {
+		r.DebugSaveH264File.Write(raw)
+	}
+
+	return raw, err
 }
