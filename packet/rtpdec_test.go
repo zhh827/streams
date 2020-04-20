@@ -2,7 +2,6 @@ package packet
 
 import (
 	"github.com/MeloQi/rtp"
-	"github.com/max-min/streams/packet"
 	"io"
 	"os"
 	"testing"
@@ -28,7 +27,7 @@ func TestRtpPsDec(t *testing.T) {
 	}
 	defer outfile.Close()
 
-	buf := make([]byte, packet.MAXFrameLen)
+	buf := make([]byte, 1024 * 1024 * 2)
 	bufLen := 0
 	timestamp := 0
 	for {
@@ -51,7 +50,7 @@ func TestRtpPsDec(t *testing.T) {
 			frameEnd++
 			if buf[frameEnd] == 0 && buf[frameEnd+1] == 0 && buf[frameEnd+2] == 1 {
 				if buf[frameEnd+3] == 0xba {
-					break
+				break
 				}
 			}
 		}

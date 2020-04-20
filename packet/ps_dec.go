@@ -124,11 +124,13 @@ func (dec *DecPSPackage) decPackHeader(br bitreader.BitReader) ([]byte, error) {
 				return nil, err
 			}
 		case StartCodeVideo:
-			//	fallthrough
-			//case StartCodeAudio: //不要音频
 			if err := dec.decPESPacket(br); err != nil {
 				return nil, err
 			}
+		case StartCodeAudio: //不要音频, 音频直接跳过
+			raw := dec.rawData[:dec.rawLen]
+			dec.rawLen = 0
+			return raw, nil
 		case MEPGProgramEndCode:
 			raw := dec.rawData[:dec.rawLen]
 			dec.rawLen = 0
