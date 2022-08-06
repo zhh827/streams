@@ -27,7 +27,6 @@ type RtpTransfer struct {
 }
 
 func NewRRtpTransfer(src string, pro int) *RtpTransfer {
-
 	return &RtpTransfer{
 		datasrc:   src,
 		protocol:  pro,
@@ -89,6 +88,7 @@ func (rtp *RtpTransfer) Exit() {
 
 func (rtp *RtpTransfer) Send2data(data []byte, key bool, pts uint64) {
 	psSys := rtp.psEnc.encPackHeader(pts)
+	// fmt.Printf("psh: %x\n ", psSys)
 	if key { // just I frame will add this
 		psSys = rtp.psEnc.encSystemHeader(psSys, 2048, 512)
 		psSys = rtp.psEnc.encProgramStreamMap(psSys)
@@ -102,7 +102,7 @@ func (rtp *RtpTransfer) Send2data(data []byte, key bool, pts uint64) {
 			pesload = PESLoadLength
 		}
 		pes := rtp.psEnc.encPESPacket(data[index:index+pesload], StreamIDVideo, pesload, pts, pts)
-
+		// fmt.Printf("pes info, packet_start_code_prefix: %x stream_id: %x \n", pes[:3], pes[3:4])
 		// every frame add ps header
 		if index == 0 {
 			pes = append(psSys, pes...)
@@ -143,8 +143,8 @@ func (rtp *RtpTransfer) fragmentation(data []byte, pts uint64, last int) {
 		}
 	}
 }
-func (rtp *RtpTransfer) encRtpHeader(data []byte, marker int, curpts uint64) []byte {
 
+func (rtp *RtpTransfer) encRtpHeader(data []byte, marker int, curpts uint64) []byte {
 	if rtp.protocol == LocalCache {
 		return data
 	}
@@ -168,7 +168,6 @@ func (rtp *RtpTransfer) encRtpHeader(data []byte, marker int, curpts uint64) []b
 		return append(rtpOvertcp, data...)
 	}
 	return append(bits.pData, data...)
-
 }
 
 func (rtp *RtpTransfer) write4udp() {

@@ -50,7 +50,7 @@ var (
 	ErrMarkerBit         = errors.New("marker bit value error")
 	ErrFormatPack        = errors.New("not package standard")
 	ErrParsePakcet       = errors.New("parse ps packet error")
-	ErrParseRtp       = errors.New("parse rtp packet error")
+	ErrParseRtp          = errors.New("parse rtp packet error")
 )
 
 /*

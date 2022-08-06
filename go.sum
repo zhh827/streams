@@ -1,11 +1,7 @@
 github.com/32bitkid/bitreader v1.0.1 h1:BlmpTTTL1us9nQ+EUh4M/r5/mY+j4JeC5qOCgL/08ms=
 github.com/32bitkid/bitreader v1.0.1/go.mod h1:wiZHryiWx8YsSuS17YiR7Be4rz6FNxxQl/zs1eWJBMo=
-github.com/MeloQi/rtp v0.0.0-20200406080820-66574a0c1ac9 h1:VpuQoS46gWYN1yw/RuqOsEloOvjycXdW4/MBwhRp9u4=
-github.com/MeloQi/rtp v0.0.0-20200406080820-66574a0c1ac9/go.mod h1:gNLFi5V4qqg8RWfLBfHZZiMMhFv3sEi5VNvDRY/oyMs=
 github.com/MeloQi/rtp v0.0.0-20200420011149-7513dbe24d99 h1:iYP5qJ1CTavuBs2aN5k04v1YTtxSED3NtfZHf1aI2Wg=
 github.com/MeloQi/rtp v0.0.0-20200420011149-7513dbe24d99/go.mod h1:WmD324RJ7OewIKdcpoWYxczIFwzv2eu3o6i/URkRSO0=
-github.com/MeloQi/streamlib v0.0.0-20200331114921-8157f8f204a4 h1:hOmbPi1FlHmefaZkKpJC9nEm44b6qSIvvCtQ0IEc910=
-github.com/MeloQi/streamlib v0.0.0-20200331114921-8157f8f204a4/go.mod h1:eGxGqvyB6DuHp5shGFc1L4UXqZkzrWI5nWnG6tNMQlA=
 github.com/MeloQi/streamlib v0.0.0-20200407195955-4635c07923f0 h1:i6VCpXcRwbCFBRvtv48D7poLmmQeFuY2Ad0xNGAMjsg=
 github.com/MeloQi/streamlib v0.0.0-20200407195955-4635c07923f0/go.mod h1:eGxGqvyB6DuHp5shGFc1L4UXqZkzrWI5nWnG6tNMQlA=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

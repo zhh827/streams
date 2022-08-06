@@ -2,9 +2,10 @@ package packet
 
 import (
 	"bytes"
+	"os"
+
 	"github.com/MeloQi/rtp"
 	"github.com/gansidui/priority_queue"
-	"os"
 
 	"github.com/32bitkid/bitreader"
 )
